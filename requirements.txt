@@ -1,0 +1,23 @@
+# Core Framework
+flask==3.0.0
+werkzeug==3.0.0
+
+# Deep Learning
+torch==2.9.1
+torchvision==0.24.1
+
+# Image Processing
+pillow==11.0.0
+opencv-python==4.10.0.84
+scikit-image>=0.23.0  # Will use pre-built wheel
+
+# Explainability
+lime==0.2.0.1
+
+# Numerical & Visualization
+numpy==2.2.1
+matplotlib==3.10.0
+scipy==1.15.1
+
+# Utilities
+tqdm==4.67.1
