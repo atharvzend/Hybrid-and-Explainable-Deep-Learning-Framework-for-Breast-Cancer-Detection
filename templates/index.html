@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breast Cancer Detection - MediScan AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="20" cy="20" r="18" fill="#10847E" opacity="0.1"/>
+                    <path d="M20 10v20M10 20h20" stroke="#10847E" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+                <div class="logo-text">
+                    <h1>MediScan AI</h1>
+                    <p>Breast Cancer Detection</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <div class="user-info">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                    <span>Dr. {{ username }}</span>
+                </div>
+                <a href="/logout" class="logout-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
+                        <polyline points="16 17 21 12 16 7"/>
+                        <line x1="21" y1="12" x2="9" y2="12"/>
+                    </svg>
+                    Logout
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <div>
+                    <h1>AI-Powered Breast Cancer Detection</h1>
+                    <p>Upload ultrasound images for instant analysis with explainable AI</p>
+                </div>
+                <div class="status-badge online">
+                    <span class="status-dot"></span>
+                    System Online
+                </div>
+            </div>
+
+            <!-- Upload Section -->
+            <div class="upload-section" id="uploadSection">
+                <div class="upload-card">
+                    <div class="upload-icon">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                            <polyline points="17 8 12 3 7 8"/>
+                            <line x1="12" y1="3" x2="12" y2="15"/>
+                        </svg>
+                    </div>
+                    <h2>Upload Ultrasound Image</h2>
+                    <p>Drag and drop or click to select an ultrasound image</p>
+                    
+                    <div class="upload-dropzone" id="dropzone">
+                        <input type="file" id="fileInput" accept="image/png,image/jpeg,image/jpg" hidden>
+                        <div class="dropzone-content">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            <p class="dropzone-text">Drop your image here or <span class="browse-link">browse</span></p>
+                            <p class="file-info">Supports: PNG, JPG, JPEG (Max 16MB)</p>
+                        </div>
+                    </div>
+
+                    <button class="analyze-btn" id="analyzeBtn" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        Analyze Image
+                    </button>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-section" id="resultsSection" style="display: none;">
+                <!-- Original Image -->
+                <div class="result-card">
+                    <div class="card-header">
+                        <h3>Original Image</h3>
+                    </div>
+                    <div class="image-container">
+                        <img id="originalImage" alt="Original ultrasound">
+                    </div>
+                </div>
+
+                <!-- Prediction Results -->
+                <div class="result-card prediction-card">
+                    <div class="card-header">
+                        <h3>Diagnosis Results</h3>
+                        <div class="confidence-badge" id="confidenceBadge">
+                            <span id="confidenceValue">--</span>%
+                        </div>
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-main">
+                            <div class="prediction-icon" id="predictionIcon">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <div class="prediction-info">
+                                <h2 id="predictionClass">--</h2>
+                                <p id="predictionDescription">--</p>
+                            </div>
+                        </div>
+
+                        <div class="probabilities-section">
+                            <h4>Class Probabilities</h4>
+                            <div class="probability-bars" id="probabilityBars">
+                                <!-- Dynamically filled -->
+                            </div>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button class="secondary-btn" id="explainBtn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/>
+                                    <line x1="12" y1="17" x2="12.01" y2="17"/>
+                                </svg>
+                                Generate Explainability
+                            </button>
+                            <button class="secondary-btn" onclick="window.print()">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6 9 6 2 18 2 18 9"/>
+                                    <path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/>
+                                    <rect x="6" y="14" width="12" height="8"/>
+                                </svg>
+                                Print Report
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Explainability Section -->
+                <div class="explainability-section" id="explainabilitySection" style="display: none;">
+                    <div class="section-header">
+                        <h3>AI Explainability Analysis</h3>
+                        <p>Visual heatmaps showing how the AI model made its decision</p>
+                    </div>
+
+                    <div class="explanation-grid">
+                        <!-- Grad-CAM -->
+                        <div class="result-card">
+                            <div class="card-header">
+                                <div>
+                                    <h3>Grad-CAM Heatmap</h3>
+                                    <p class="card-subtitle">CNN Attention Visualization</p>
+                                </div>
+                                <span class="info-badge" title="Shows which regions the CNN focused on">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <line x1="12" y1="16" x2="12" y2="12"/>
+                                        <line x1="12" y1="8" x2="12.01" y2="8"/>
+                                    </svg>
+                                </span>
+                            </div>
+                            <div class="image-container loading" id="gradcamContainer">
+                                <div class="loader">
+                                    <div class="spinner"></div>
+                                    <p>Generating Grad-CAM...</p>
+                                </div>
+                                <img id="gradcamImage" alt="Grad-CAM heatmap" style="display: none;">
+                            </div>
+                            <div class="color-legend">
+                                <h4>Color Legend:</h4>
+                                <div class="legend-items">
+                                    <div class="legend-item">
+                                        <span class="legend-color red"></span>
+                                        <span>High attention - Key diagnostic areas</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-color yellow"></span>
+                                        <span>Medium attention - Supporting regions</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-color blue"></span>
+                                        <span>Low attention - Background areas</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- LIME -->
+                        <div class="result-card">
+                            <div class="card-header">
+                                <div>
+                                    <h3>LIME Explanation</h3>
+                                    <p class="card-subtitle">Interpretable Region Analysis</p>
+                                </div>
+                                <span class="info-badge" title="Shows which image segments contribute to the prediction">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <line x1="12" y1="16" x2="12" y2="12"/>
+                                        <line x1="12" y1="8" x2="12.01" y2="8"/>
+                                    </svg>
+                                </span>
+                            </div>
+                            <div class="image-container loading" id="limeContainer">
+                                <div class="loader">
+                                    <div class="spinner"></div>
+                                    <p>Generating LIME...</p>
+                                </div>
+                                <img id="limeImage" alt="LIME explanation" style="display: none;">
+                            </div>
+                            <div class="color-legend">
+                                <h4>Interpretation:</h4>
+                                <div class="legend-items">
+                                    <div class="legend-item">
+                                        <span class="legend-color lime-positive"></span>
+                                        <span>Positive - Supports predicted class</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-color lime-neutral"></span>
+                                        <span>Neutral - Minimal impact</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-color lime-negative"></span>
+                                        <span>Negative - Against predicted class</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- New Analysis Button -->
+                <div class="new-analysis-section">
+                    <button class="primary-btn" id="newAnalysisBtn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 5v14M5 12h14"/>
+                        </svg>
+                        New Analysis
+                    </button>
+                </div>
+            </div>
+
+            <!-- Loading Overlay -->
+            <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+                <div class="loading-content">
+                    <div class="loader-large">
+                        <div class="spinner-large"></div>
+                    </div>
+                    <h3>Analyzing Image...</h3>
+                    <p>Please wait while our AI processes the ultrasound</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast" style="display: none;">
+        <div class="toast-content">
+            <svg class="toast-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <span class="toast-message"></span>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Breast Cancer Detection System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="20" cy="20" r="18" fill="#10847E" opacity="0.1"/>
+                    <path d="M20 10v20M10 20h20" stroke="#10847E" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+                <div class="logo-text">
+                    <h1>MediScan AI</h1>
+                    <p>Breast Cancer Detection</p>
+                </div>
+            </div>
+            <nav class="nav-links">
+                <a href="#about">About</a>
+                <a href="#features">Features</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="content-wrapper">
+            <!-- Left Section - Info -->
+            <div class="info-section">
+                <div class="info-content">
+                    <h2>Advanced AI-Powered Breast Cancer Detection</h2>
+                    <p class="tagline">Empowering healthcare professionals with cutting-edge diagnostic technology</p>
+                    
+                    <div class="features-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3>95% Accuracy</h3>
+                                <p>State-of-the-art CNN-ViT hybrid model</p>
+                            </div>
+                        </div>
+
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3>Instant Results</h3>
+                                <p>Real-time ultrasound image analysis</p>
+                            </div>
+                        </div>
+
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3>Explainable AI</h3>
+                                <p>Visual heatmaps with Grad-CAM & LIME</p>
+                            </div>
+                        </div>
+
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3>Secure & Private</h3>
+                                <p>HIPAA-compliant data handling</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="trust-badges">
+                        <div class="badge">
+                            <span class="badge-icon">🏥</span>
+                            <span>FDA Approved</span>
+                        </div>
+                        <div class="badge">
+                            <span class="badge-icon">🔒</span>
+                            <span>ISO Certified</span>
+                        </div>
+                        <div class="badge">
+                            <span class="badge-icon">⭐</span>
+                            <span>Trusted by 500+ Hospitals</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Section - Login Form -->
+            <div class="login-section">
+                <div class="login-card">
+                    <div class="card-header">
+                        <h2>Healthcare Professional Login</h2>
+                        <p>Sign in to access the diagnostic platform</p>
+                    </div>
+
+                    <form id="loginForm" class="login-form">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <div class="input-wrapper">
+                                <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+                                    <circle cx="12" cy="7" r="4"/>
+                                </svg>
+                                <input 
+                                    type="text" 
+                                    id="username" 
+                                    name="username" 
+                                    placeholder="Enter your username"
+                                    required
+                                    autocomplete="username"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <div class="input-wrapper">
+                                <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                    <path d="M7 11V7a5 5 0 0110 0v4"/>
+                                </svg>
+                                <input 
+                                    type="password" 
+                                    id="password" 
+                                    name="password" 
+                                    placeholder="Enter your password"
+                                    required
+                                    autocomplete="current-password"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-options">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="remember">
+                                <span>Remember me</span>
+                            </label>
+                            <a href="#" class="forgot-link">Forgot password?</a>
+                        </div>
+
+                        <div id="errorMessage" class="error-message" style="display: none;"></div>
+
+                        <button type="submit" class="login-btn" id="loginBtn">
+                            <span class="btn-text">Sign In</span>
+                            <span class="btn-loader" style="display: none;">
+                                <div class="spinner"></div>
+                            </span>
+                        </button>
+                    </form>
+
+                    <div class="demo-section">
+                        <div class="divider">
+                            <span>Demo Access</span>
+                        </div>
+                        <div class="demo-credentials">
+                            <div class="demo-item">
+                                <span class="demo-label">Doctor:</span>
+                                <code>doctor / password123</code>
+                            </div>
+                            <div class="demo-item">
+                                <span class="demo-label">Admin:</span>
+                                <code>admin / admin123</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="help-text">
+                    <p>Need help? Contact <a href="mailto:support@mediscan.ai">support@mediscan.ai</a></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 MediScan AI. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Support</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+</body>
+</html>
